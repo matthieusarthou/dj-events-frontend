@@ -5,6 +5,7 @@ import './globals.css';
 import styles from '@/app/styles/Layout.module.css';
 import HeaderPage from '@/app/header/page';
 import FooterPage from '@/app/footer/page';
+import Showcase from './showcase/page';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({ title, keywords, description, children }: {
       </Head>
       <body className={inter.className}>
         <HeaderPage />
+        <Showcase />
         <div className={styles.container}>{children}</div>
         <FooterPage />
       </body>
