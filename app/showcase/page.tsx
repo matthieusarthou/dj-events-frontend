@@ -1,6 +1,5 @@
 'use client';
 import { usePathname } from 'next/navigation';
-
 import styles from '@/app/styles/Showcase.module.css';
 
 export default function Showcase() {
