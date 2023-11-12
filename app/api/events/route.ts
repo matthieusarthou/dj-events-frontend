@@ -16,3 +16,13 @@ export async function getEvents() {
     },
   };
 }
+
+export async function getEvent(eventId: string) {
+  const res = await events.filter((evt: { id: any }) => evt.id == eventId)[0];
+  console.log(res);
+  return {
+    props: {
+      res,
+    },
+  };
+}

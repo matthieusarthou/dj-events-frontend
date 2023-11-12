@@ -17,8 +17,13 @@ export default function EventItem({ evt }: { evt: any }) {
         <span>{`${evt.date} - ${evt.time}`}</span>
         <h3>{evt.name}</h3>
       </div>
-      <div className={`${styles.link} ${styles.linktext}`}>
-        <Link href={`/events/${evt.id}`}>Details</Link>
+      <div>
+        <Link
+          href={`/events/${evt.id}`}
+          className="btn btn-primary"
+        >
+          Details
+        </Link>
       </div>
     </div>
   );
