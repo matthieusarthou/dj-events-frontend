@@ -22,7 +22,7 @@ export default async function EventPage({ params }: { params: { eventId: string 
         </a>
       </div>
       <span>
-        {evt.date} at {evt.time}
+        {new Date(evt.date).toLocaleDateString('en-US')} at {evt.time}
       </span>
       <h1>{evt.name}</h1>
       <div className={styles.image}>

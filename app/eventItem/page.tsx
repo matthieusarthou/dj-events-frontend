@@ -14,7 +14,7 @@ export default function EventItem({ evt, evtId }: { evt: any; evtId: any }) {
         />
       </div>
       <div className={styles.info}>
-        <span>{`${evt.date} - ${evt.time}`}</span>
+        <span>{`${new Date(evt.date).toLocaleDateString('en-US')} - ${evt.time}`}</span>
         <h3>{evt.name}</h3>
       </div>
       <div>
