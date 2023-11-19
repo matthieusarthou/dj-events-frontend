@@ -2,12 +2,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '@/app/styles/EventItem.module.css';
 
-export default function EventItem({ evt }: { evt: any }) {
+export default function EventItem({ evt, evtId }: { evt: any; evtId: any }) {
   return (
     <div className={styles.event}>
       <div className={styles.img}>
         <Image
-          src={evt.image || '/images/event-default.png'}
+          src={evt.image.data.attributes.formats.thumbnail.url || '/images/event-default.png'}
           alt={evt.name}
           width={170}
           height={100}
@@ -19,7 +19,7 @@ export default function EventItem({ evt }: { evt: any }) {
       </div>
       <div>
         <Link
-          href={`/events/${evt.id}`}
+          href={`/events/${evtId}`}
           className="btn btn-primary"
         >
           Details

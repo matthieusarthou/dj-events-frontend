@@ -6,12 +6,13 @@ export default async function Page() {
   return (
     <div>
       <h1>Upcoming events</h1>
-      {evts.props.res === 0 && <h3>No events found.</h3>}
-      {evts.props.res.map((evt: any) => (
+      {evts.data === 0 && <h3>No events found.</h3>}
+      {evts.data.map((evt: any) => (
         <div>
           <EventItem
             key={evt.id}
-            evt={evt}
+            evt={evt.attributes}
+            evtId={evt.id}
           />
         </div>
       ))}
