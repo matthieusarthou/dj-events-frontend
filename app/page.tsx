@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import styles from '@/app/page.module.css';
 import { getEvents } from './api/events/route';
 import EventItem from './eventItem/page';
 import Link from 'next/link';

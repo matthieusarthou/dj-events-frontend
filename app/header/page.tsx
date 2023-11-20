@@ -7,6 +7,9 @@ export default function HeaderPage() {
       <div className={styles.logo}>
         <Link href="/">DJ Events</Link>
       </div>
+      <div className={styles.logo}>
+        <Link href="/">DJ Events</Link>
+      </div>
       <nav>
         <ul>
           <li>
