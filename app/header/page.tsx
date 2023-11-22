@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from '@/app/styles/Header.module.css';
+import Search from '../events/search/page';
 
 export default function HeaderPage() {
   return (
@@ -7,9 +8,7 @@ export default function HeaderPage() {
       <div className={styles.logo}>
         <Link href="/">DJ Events</Link>
       </div>
-      <div className={styles.logo}>
-        <Link href="/">DJ Events</Link>
-      </div>
+      <Search />
       <nav>
         <ul>
           <li>

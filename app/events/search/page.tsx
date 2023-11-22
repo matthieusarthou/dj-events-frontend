@@ -1,21 +1,28 @@
-import { getEvents } from '@/app/api/events/route';
-import EventItem from '@/app/eventItem/page';
+'use client';
+import styles from '@/app/styles/Search.module.css';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-export default async function Page() {
-  const evts = await getEvents();
+export default function Search() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push(`/events/search/${searchTerm}`);
+    setSearchTerm('');
+  };
+
   return (
-    <div>
-      <h1>Search results</h1>
-      {evts.data === 0 && <h3>No events found.</h3>}
-      {evts.data.map((evt: any) => (
-        <div>
-          <EventItem
-            key={evt.id}
-            evt={evt.attributes}
-            evtId={evt.id}
-          />
-        </div>
-      ))}
+    <div className={styles.search}>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search Events"
+        ></input>
+      </form>
     </div>
   );
 }
