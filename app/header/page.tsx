@@ -15,7 +15,7 @@ export default function HeaderPage() {
             <Link href="/events">Events</Link>
           </li>
           <li>
-            <Link href="/events/add">Add events</Link>
+            <Link href="/events/add">Add an event</Link>
           </li>
         </ul>
       </nav>

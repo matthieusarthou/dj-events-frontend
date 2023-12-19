@@ -5,7 +5,6 @@ const nextConfig = {
     domains: ['res.cloudinary.com'],
   },
   compiler: {
-    // Enables the styled-components SWC transform
     styledComponents: true,
   },
 };

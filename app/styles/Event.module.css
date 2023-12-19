@@ -7,6 +7,12 @@
   font-size: 25px;
 }
 
+.event pre {
+  margin: 10px 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
 .event p {
   margin: 10px 0;
 }

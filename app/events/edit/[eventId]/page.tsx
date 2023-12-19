@@ -1,10 +1,15 @@
 'use client';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useState, ChangeEvent } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { FaSave } from 'react-icons/fa';
+import { getEvent } from '@/app/api/events/route';
 import styles from '@/app/styles/Form.module.css';
+import Link from 'next/link';
+import { FaImage } from 'react-icons/fa';
+import Image from 'next/image';
+import { useState, ChangeEvent, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 interface FormValues {
   name: string;
   performers: string;
@@ -15,22 +20,46 @@ interface FormValues {
   description: any;
 }
 
-export default function AddEventPage() {
-  const [description, setDescription] = useState('description');
-  const [values, setValues] = useState<FormValues>({
-    name: 'name',
-    performers: 'performers',
-    venue: 'venue',
-    address: 'address',
-    date: '2001-01-01',
-    time: '10:10',
-    description: description,
-  });
-
+export default function EditEventPage({ params }: { params: { eventId: string } }) {
   const router = useRouter();
+  const [description, setDescription] = useState();
+  const [values, setValues] = useState<FormValues>({
+    name: '',
+    performers: '',
+    venue: '',
+    address: '',
+    date: '',
+    time: '',
+    description: '',
+  });
+  const [imagePreview, setImagePreview] = useState();
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchData = async () => {
+      try {
+        const evt = (await getEvent(params.eventId)).data.attributes;
+        if (isMounted) {
+          setValues({ ...evt, date: evt.date.substring(0, 10) });
+          setDescription(evt.description[0].children[0].text);
+          console.log();
+          setImagePreview(evt.image ? evt.image.data.attributes.formats.thumbnail.url : null);
+        }
+      } catch (error) {
+        console.error('Error fetching event data:', error);
+      }
+    };
+    fetchData();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!confirm('Do you want to save your changes?')) {
+      return;
+    }
     const hasMissingInfo = Object.values(values).some((v) => v === '') || description === '';
     if (hasMissingInfo) {
       toast.error('Missing information!');
@@ -49,8 +78,8 @@ export default function AddEventPage() {
       },
     ];
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events`, {
-        method: 'POST',
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/events/${params.eventId}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -63,7 +92,7 @@ export default function AddEventPage() {
         router.push(`/events/${evt.data.id}`);
       }
     } catch (error) {
-      console.error('Error creating event:', error);
+      console.error('Error editing event:', error);
     }
   };
 
@@ -80,7 +109,7 @@ export default function AddEventPage() {
   return (
     <div>
       <Link href="/events">Events</Link>
-      <h1>Add an event</h1>
+      <h1>Edit an event</h1>
       <ToastContainer />
       <form
         onSubmit={handleSubmit}
@@ -190,10 +219,30 @@ export default function AddEventPage() {
         </div>
         <input
           type="submit"
-          value="Add Event"
+          value="Update Event"
           className="btn"
         />
       </form>
+      <h2>Event image</h2>
+      {imagePreview ? (
+        <div className={styles.img}>
+          <Image
+            src={imagePreview}
+            alt={values.name}
+            width={170}
+            height={100}
+          />
+        </div>
+      ) : (
+        <div>
+          <p>No Image uploaded.</p>
+        </div>
+      )}
+      <div>
+        <button className="btn-secondary">
+          <FaImage /> Change image
+        </button>
+      </div>
     </div>
   );
 }
