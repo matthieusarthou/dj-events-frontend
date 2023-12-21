@@ -9,6 +9,7 @@ import { FaImage } from 'react-icons/fa';
 import Image from 'next/image';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Modal from '@/components/modal';
 
 interface FormValues {
   name: string;
@@ -22,7 +23,8 @@ interface FormValues {
 
 export default function EditEventPage({ params }: { params: { eventId: string } }) {
   const router = useRouter();
-  const [description, setDescription] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const [description, setDescription] = useState('');
   const [values, setValues] = useState<FormValues>({
     name: '',
     performers: '',
@@ -239,9 +241,18 @@ export default function EditEventPage({ params }: { params: { eventId: string } 
         </div>
       )}
       <div>
-        <button className="btn-secondary">
+        <button
+          onClick={() => setShowModal(true)}
+          className="btn-secondary"
+        >
           <FaImage /> Change image
         </button>
+        <Modal
+          show={showModal}
+          title="Testing"
+          children="test"
+          onClose={() => setShowModal(false)}
+        />
       </div>
     </div>
   );

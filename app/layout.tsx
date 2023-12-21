@@ -34,6 +34,7 @@ export default function RootLayout({ title, keywords, description, children }: {
         <Showcase />
         <div className={styles.container}>{children}</div>
         <FooterPage />
+        <div id="modal-root" />
       </body>
     </html>
   );
